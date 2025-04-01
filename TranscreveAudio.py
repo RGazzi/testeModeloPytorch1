@@ -1,27 +1,23 @@
 import speech_recognition as sr
 
 class AudioTranscriber:
-    def __init__(self, audio_file_path):
-        self.audio_file_path = audio_file_path
+    def __init__(self, audio_path):
+        self.audio_file_path = audio_path
         self.recognizer = sr.Recognizer()
 
     def transcribe_audio(self):
-        #abrir arquivo
+        """Transcreve o áudio e retorna o texto."""
         with sr.AudioFile(self.audio_file_path) as source:
             audio = self.recognizer.record(source)
-            print("ver função")
+            print("Lendo arquivo de áudio...")
 
         try:
-            #usando o Google Web Speech API para reconhecer o áudio
             text = self.recognizer.recognize_google(audio, language='pt-BR')
             print(f"Texto Transcrito: {text}")
+            return text
         except sr.UnknownValueError:
-            print("não foi possível ouvir o áudio")
+            print("Não foi possível entender o áudio.")
+            return "não entendi."
         except sr.RequestError:
-            print(f"erro na requisição ao serviço de reconhecimento de fala, {e}")
-
-audio_path = 'venv/audio_files/Audio_ola.wav'
-
-
-transcriber = AudioTranscriber(audio_path)
-transcriber.transcribe_audio()
+            print("Erro na requisição ao serviço de reconhecimento de fala.")
+            return "erro no reconhecimento."

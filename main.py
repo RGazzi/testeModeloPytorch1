@@ -1,15 +1,15 @@
-# This is a sample Python script.
-import CadastroVoz
+from Resposta import RespostaUsuario
+from TranscreveAudio import AudioTranscriber
 
-import TranscreveAudio
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-
-
-
-# Press the green button in the gutter to run the script.
+# Pressione o botão verde para rodar o script
 if __name__ == '__main__':
-    TranscreveAudio.AudioTranscriber('venv/audio_files/Audio_ola.wav')
+    audio_path = 'venv/audio_files/Audio_ola.wav'
+    print("Iniciando o assistente com áudio capturado...")
+
+    # Transcrever o áudio
+    transcriber = AudioTranscriber(audio_path)
+    comando = transcriber.transcribe_audio()
+
+    # Criar instância do RespostaUsuario e processar o comando
+    resposta_usuario = RespostaUsuario("Ricardo", comando)
+    resposta_usuario.ProcessarComando()
